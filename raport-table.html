@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blank Project</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" >
+    <style>
+        body{
+            padding: 8px;
+        }
+        .text-blue{
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" id="btn-k7" class="btn" onclick="viewNilai('k7')" style="border: 1px solid red;">Kelas 7</button>
+            <button type="button" id="btn-k8" class="btn" onclick="viewNilai('k8')" style="border: 1px solid red;">Kelas 8</button>
+            <button type="button" id="btn-k9" class="btn" onclick="viewNilai('k9')"  style="border: 1px solid red;">Kelas 9</button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table tabli-stripped tbl-nilai">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Mapel</th>
+                        <th>Nilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Math</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>IPA</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>IPS</td>
+                        <td>50</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div>
+                Rata-rata : 70
+            </div>  
+        </div>
+    </div>
+    
+    
+
+    <script src="assets/js/jquery-3.7.1.min.js" "></script>
+    <script src="assets/js/bootstrap.js" ></script>
+
+    <script>
+        const arrNilai = {
+            'k7' : [
+                {
+                    nama: "B.Indo",
+                    nilai: "90"
+                },
+                {
+                    nama: "MTK",
+                    nilai: "80"
+                },
+                {
+                    nama: "B.Jawa",
+                    nilai: "50"
+                },
+                {
+                    nama: "PPKn",
+                    nilai: "70"
+                },
+                {
+                    nama: "Agama",
+                    nilai: "100"
+                },
+            ],
+            'k8' : [
+                {
+                    nama: "B.Indo",
+                    nilai: "80"
+                },
+                {
+                    nama: "MTK",
+                    nilai: "60"
+                },
+                {
+                    nama: "B.Jawa",
+                    nilai: "40"
+                },
+                {
+                    nama: "PPKn",
+                    nilai: "60"
+                },
+                {
+                    nama: "Agama",
+                    nilai: "90"
+                },
+            
+            ],
+            'k9' : [
+                {
+                    nama: "B.Indo",
+                    nilai: "100"
+                },
+                {
+                    nama: "MTK",
+                    nilai: "85"
+                },
+                {
+                    nama: "B.Jawa",
+                    nilai: "65"
+                },
+                {
+                    nama: "PPKn",
+                    nilai: "50"
+                },
+                {
+                    nama: "Agama",
+                    nilai: "100"
+                },
+            
+            ],
+        }
+
+     
+        function viewNilai(code){
+     
+            var mHtml = ""
+            var numb = 1
+            var totNilai = 0
+            var totalSiswa = arrNilai[code].length
+            var jmlRemidi = 0 
+
+            arrNilai[code].forEach(element => {
+
+                mHtml += "<tr>"
+                mHtml += "<td>"+numb+"</td>"
+                mHtml += "<td>"+element.nama+"</td>"
+                mHtml += "<td>"+element.nilai+"</td>"
+                mHtml += "</tr>"
+                
+                totNilai += parseInt(element.nilai)
+                numb++
+            });
+
+            var mean = totNilai/totalSiswa;
+            var jumlahLulus =  totalSiswa -= jmlRemidi
+         
+            $(".tbl-nilai tbody").html(mHtml)
+            $(".txt-mean").html("Rata-rata : "+mean)
+            $(".txt-remidi").html("remidi :  "+jmlRemidi)
+            $(".txt-lulus").html("lulus :  "+jumlahLulus)
+            
+            $(".btn").removeClass("btn-danger")
+            $("#btn-"+code).addClass("btn-danger")
+        }
+
+    </script>
+    
+</body>
+</html>
