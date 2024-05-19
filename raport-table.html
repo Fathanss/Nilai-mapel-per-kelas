@@ -25,7 +25,7 @@
     
     <div class="row">
         <div class="col-md-8">
-            <table class="table tabli-stripped tbl-nilai">
+            <table id="tbl-nilai" class="table tabli-stripped tbl-nilai">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -57,11 +57,12 @@
             </div>  
         </div>
     </div>
-    
-    
+
+    <button id="btn-export"><b>Export as XLSX</b></button>
 
     <script src="assets/js/jquery-3.7.1.min.js" "></script>
     <script src="assets/js/bootstrap.js" ></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
 
     <script>
         const arrNilai = {
@@ -167,6 +168,18 @@
             $(".btn").removeClass("btn-danger")
             $("#btn-"+code).addClass("btn-danger")
         }
+
+
+        const exportButton = document.getElementById('btn-export');
+        const table = document.getElementById('tbl-nilai');
+
+        exportButton.addEventListener('click', () => {
+        /* Create worksheet from HTML DOM TABLE */
+        const wb = XLSX.utils.table_to_book(table, {sheet: 'sheet-1'});
+
+        /* Export to file (start a download) */
+        XLSX.writeFile(wb, 'nilai.xlsx');
+        });
 
     </script>
     
