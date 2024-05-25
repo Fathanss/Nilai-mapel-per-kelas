@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stok Barang</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" >
+    <style>
+        body{
+            padding: 8px;
+        }
+        .text-blue{
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <h2>Stok Barang</h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    List Product
+                </div>
+                <div class="card-body">
+                    <table id="tbl-stock" class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Product</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Grafik
+                </div>
+                <div class="card-body">
+                    <div class="col-md-6">
+                        <div id="section-grafik-bar">
+                            <canvas id="grafik-bar"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.js" ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const arrProducts = [
+                {
+                    nama: "Indomie",
+                    stok: 100
+                },
+            ]
+
+        viewNilai("k7")
+     
+        function viewNilai(code){
+            $("#section-grafik-bar").html('<canvas id="grafik-bar"></canvas>')
+            const ctxBar = document.getElementById('grafik-bar');
+
+            var ctx = ctxBar.getContext("2d");
+            var gradient1 = ctx.createLinearGradient(0, 0, 0, 270);
+            gradient1.addColorStop(0, "red");
+            gradient1.addColorStop(0.1, "blue");
+            gradient1.addColorStop(0.2, "green");
+            gradient1.addColorStop(0.3, "orange");
+            gradient1.addColorStop(0.4, "black");
+            gradient1.addColorStop(0.5, "pink");
+            gradient1.addColorStop(0.6, "purple");
+            gradient1.addColorStop(0.7, "gray");
+            gradient1.addColorStop(0.8, "#0dcaf0");
+            gradient1.addColorStop(0.9, "brown");
+            gradient1.addColorStop(1, "yellow");
+
+            ctx.fillStyle = gradient1;
+            ctx.fillRect(20, 20, 150, 100);
+     
+            var mHtml = ""
+            var numb = 1
+            var totNilai = 0
+            var totalSiswa = arrNilai[code].length
+            var jmlRemidi = 0 
+
+            var arrX = []
+            var arrY = []
+
+            arrNilai[code].forEach(element => {
+
+                mHtml += "<tr>"
+                mHtml += "<td>"+numb+"</td>"
+                mHtml += "<td>"+element.nama+"</td>"
+                mHtml += "<td>"+element.nilai+"</td>"
+                mHtml += "</tr>"
+                
+                totNilai += parseInt(element.nilai)
+                numb++
+
+                arrX.push(element.nama)
+                arrY.push(element.nilai)
+            });
+
+            var mean = totNilai/totalSiswa;
+            var jumlahLulus =  totalSiswa -= jmlRemidi
+         
+            $(".tbl-stock tbody").html(mHtml)
+
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: arrX,
+                    datasets: [{
+                        label: 'nilai',
+                        data: arrY,
+                        borderWidth: 1,
+                        backgroundColor:gradient1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+        }
+    </script>
+    
+</body>
+</html>
