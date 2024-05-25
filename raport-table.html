@@ -156,6 +156,24 @@
             $("#section-grafik-bar").html('<canvas id="grafik-nilai-bar"></canvas>')
             $("#section-grafik-pie").html('<canvas id="grafik-nilai-pie"></canvas>')
             const ctxBar = document.getElementById('grafik-nilai-bar');
+
+            var ctx = ctxBar.getContext("2d");
+            var gradient1 = ctx.createLinearGradient(0, 0, 0, 270);
+            gradient1.addColorStop(0, "red");
+            gradient1.addColorStop(0.1, "blue");
+            gradient1.addColorStop(0.2, "green");
+            gradient1.addColorStop(0.3, "orange");
+            gradient1.addColorStop(0.4, "black");
+            gradient1.addColorStop(0.5, "pink");
+            gradient1.addColorStop(0.6, "purple");
+            gradient1.addColorStop(0.7, "gray");
+            gradient1.addColorStop(0.8, "#0dcaf0");
+            gradient1.addColorStop(0.9, "brown");
+            gradient1.addColorStop(1, "yellow");
+
+            ctx.fillStyle = gradient1;
+            ctx.fillRect(20, 20, 150, 100);
+
             const ctxPie = document.getElementById('grafik-nilai-pie');
      
             var mHtml = ""
@@ -201,7 +219,7 @@
                         label: 'nilai',
                         data: arrY,
                         borderWidth: 1,
-                        backgroundColor:"#dc3545"
+                        backgroundColor:gradient1
                     }]
                 },
                 options: {
