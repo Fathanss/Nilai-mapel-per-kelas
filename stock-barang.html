@@ -44,10 +44,8 @@
                     Grafik
                 </div>
                 <div class="card-body">
-                    <div class="col-md-6">
-                        <div id="section-grafik-bar">
-                            <canvas id="grafik-bar"></canvas>
-                        </div>
+                    <div id="section-grafik-bar">
+                        <canvas id="grafik-bar"></canvas>
                     </div>
                 </div>
             </div>
@@ -65,26 +63,34 @@
                     nama: "Indomie",
                     stok: 100
                 },
+                {
+                    nama: "Mie Sedaap",
+                    stok: 50
+                },
+                {
+                    nama: "Pop Mie",
+                    stok: 75
+                },
+                {
+                    nama: "Sarimi",
+                    stok: 30
+                },
+                {
+                    nama: "Mie Recheese",
+                    stok: 10
+                },
             ]
 
-        viewNilai("k7")
+        viewStok()
      
-        function viewNilai(code){
+        function viewStok(){
             $("#section-grafik-bar").html('<canvas id="grafik-bar"></canvas>')
             const ctxBar = document.getElementById('grafik-bar');
 
             var ctx = ctxBar.getContext("2d");
             var gradient1 = ctx.createLinearGradient(0, 0, 0, 270);
             gradient1.addColorStop(0, "red");
-            gradient1.addColorStop(0.1, "blue");
-            gradient1.addColorStop(0.2, "green");
-            gradient1.addColorStop(0.3, "orange");
-            gradient1.addColorStop(0.4, "black");
-            gradient1.addColorStop(0.5, "pink");
-            gradient1.addColorStop(0.6, "purple");
-            gradient1.addColorStop(0.7, "gray");
-            gradient1.addColorStop(0.8, "#0dcaf0");
-            gradient1.addColorStop(0.9, "brown");
+            gradient1.addColorStop(0.5, "orange");
             gradient1.addColorStop(1, "yellow");
 
             ctx.fillStyle = gradient1;
@@ -92,32 +98,25 @@
      
             var mHtml = ""
             var numb = 1
-            var totNilai = 0
-            var totalSiswa = arrNilai[code].length
-            var jmlRemidi = 0 
 
             var arrX = []
             var arrY = []
 
-            arrNilai[code].forEach(element => {
+            arrProducts.forEach(element => {
 
                 mHtml += "<tr>"
                 mHtml += "<td>"+numb+"</td>"
                 mHtml += "<td>"+element.nama+"</td>"
-                mHtml += "<td>"+element.nilai+"</td>"
+                mHtml += "<td>"+element.stok+"</td>"
                 mHtml += "</tr>"
                 
-                totNilai += parseInt(element.nilai)
                 numb++
 
                 arrX.push(element.nama)
-                arrY.push(element.nilai)
+                arrY.push(element.stok)
             });
 
-            var mean = totNilai/totalSiswa;
-            var jumlahLulus =  totalSiswa -= jmlRemidi
-         
-            $(".tbl-stock tbody").html(mHtml)
+            $("#tbl-stock tbody").html(mHtml)
 
             new Chart(ctxBar, {
                 type: 'bar',
