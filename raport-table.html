@@ -57,12 +57,26 @@
             </div>  
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="section-grafik-bar">
+                <canvas id="grafik-nilai-bar"></canvas>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="section-grafik-pie">
+                <canvas id="grafik-nilai-pie"></canvas>
+            </div>
+        </div>
+    </div>
 
     <button id="btn-export"  class="btn btn-success">Export as XLSX</button>
 
-    <script src="assets/js/jquery-3.7.1.min.js" "></script>
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
     <script src="assets/js/bootstrap.js" ></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         const arrNilai = {
@@ -136,14 +150,22 @@
             ],
         }
 
+        viewNilai("k7")
      
         function viewNilai(code){
+            $("#section-grafik-bar").html('<canvas id="grafik-nilai-bar"></canvas>')
+            $("#section-grafik-pie").html('<canvas id="grafik-nilai-pie"></canvas>')
+            const ctxBar = document.getElementById('grafik-nilai-bar');
+            const ctxPie = document.getElementById('grafik-nilai-pie');
      
             var mHtml = ""
             var numb = 1
             var totNilai = 0
             var totalSiswa = arrNilai[code].length
             var jmlRemidi = 0 
+
+            var arrX = []
+            var arrY = []
 
             arrNilai[code].forEach(element => {
 
@@ -155,6 +177,9 @@
                 
                 totNilai += parseInt(element.nilai)
                 numb++
+
+                arrX.push(element.nama)
+                arrY.push(element.nilai)
             });
 
             var mean = totNilai/totalSiswa;
@@ -167,6 +192,45 @@
             
             $(".btn").removeClass("btn-danger")
             $("#btn-"+code).addClass("btn-danger")
+
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: arrX,
+                    datasets: [{
+                        label: 'nilai',
+                        data: arrY,
+                        borderWidth: 1,
+                        backgroundColor:"#dc3545"
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: arrX,
+                    datasets: [{
+                        label: 'nilai',
+                        data: arrY,
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                        beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
 
 
@@ -174,12 +238,13 @@
         const table = document.getElementById('tbl-nilai');
 
         exportButton.addEventListener('click', () => {
-        /* Create worksheet from HTML DOM TABLE */
-        const wb = XLSX.utils.table_to_book(table, {sheet: 'sheet-1'});
-
-        /* Export to file (start a download) */
-        XLSX.writeFile(wb, 'nilai.xlsx');
+            /* Create worksheet from HTML DOM TABLE */
+            const wb = XLSX.utils.table_to_book(table, {sheet: 'sheet-1'});
+            XLSX.writeFile(wb, 'nilai.xlsx');
         });
+
+
+       
 
     </script>
     
